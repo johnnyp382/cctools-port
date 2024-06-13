@@ -1,0 +1,23 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "1009.2-ld64-907" ]
+  pull_request:
+    branches: [ "1009.2-ld64-907" ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: configure
+      run: ./configure -target=arm64-apple-darwin22.1.0 --with-sysroot=/var/jb/Library/Developer/CommandLineTools/SDKs/iPhoneOS17.0.sdk with-native-system-header-dir=/usr/include target_cpu=arm64
+    - name: make
+      run: make
+    - name: make check
+      run: make check
+    - name: make distcheck
+      run: make distcheck
